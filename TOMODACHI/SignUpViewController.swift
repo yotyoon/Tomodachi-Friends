@@ -1,60 +1,143 @@
 //
-//  SignUpViewController.swift
+//  SignViewController.swift
 //  TOMODACHI
 //
-//  Created by Yot Yoon TOh on 11/3/15.
+//  Created by Yot Yoon Toh on 11/5/15.
 //  Copyright © 2015 Yot Yoon Toh. All rights reserved.
 //
 
-import Foundation
+import UIKit
+import Parse
 
-class SignUpViewController : PFSignUpViewController {
-    
-    var backgroundImage : UIImageView!;
+class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+    @IBOutlet weak var profilePhotoImageView: UIImageView!
+    @IBOutlet weak var userEmailAddressTextField: UITextField!
+    @IBOutlet weak var userPasswordTextField: UITextField!
+    @IBOutlet weak var userPasswordRepeatTextField: UITextField!
+    @IBOutlet weak var userFirstNameTextField: UITextField!
+    @IBOutlet weak var userLastNameTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // set our custom background image
-        backgroundImage = UIImageView(image: UIImage(named: "loginScreen"))
-        backgroundImage.contentMode = UIViewContentMode.ScaleAspectFill
-        signUpView!.insertSubview(backgroundImage, atIndex: 0)
-        
-        // remove the parse Logo
-        let logo = UILabel()
-        logo.text = ""
-        logo.textColor = UIColor.whiteColor()
-        logo.font = UIFont(name: "Pacifico", size: 20)
-        logo.shadowColor = UIColor.lightGrayColor()
-        logo.shadowOffset = CGSizeMake(2, 2)
-        signUpView?.logo = logo
-        
-        // make the background of the sign up button pop more
-        signUpView?.signUpButton!.setBackgroundImage(nil, forState: .Normal)
-        signUpView?.signUpButton!.backgroundColor = UIColor(red: 52/255, green: 191/255, blue: 73/255, alpha: 1)
-        
-        // change dismiss button to say 'Already signed up?'
-        signUpView?.dismissButton!.setTitle("Already signed up?", forState: .Normal)
-        signUpView?.dismissButton!.setImage(nil, forState: .Normal)
-        
-        // modify the present tranisition to be a flip instead
-        self.modalTransitionStyle = UIModalTransitionStyle.FlipHorizontal
+
+        // Do any additional setup after loading the view.
     }
     
     override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        // stretch background image to fill screen
-        backgroundImage.frame = CGRectMake( 0,  0,  signUpView!.frame.width,  signUpView!.frame.height)
-        
-        // position logo at top with larger frame
-        signUpView!.logo!.sizeToFit()
-        let logoFrame = signUpView!.logo!.frame
-        signUpView!.logo!.frame = CGRectMake(logoFrame.origin.x, signUpView!.usernameField!.frame.origin.y - logoFrame.height - 16, signUpView!.frame.width,  logoFrame.height)
-        
-        // re-layout out dismiss button to be below sign
-        let dismissButtonFrame = signUpView!.dismissButton!.frame
-        signUpView?.dismissButton!.frame = CGRectMake(0, signUpView!.signUpButton!.frame.origin.y + signUpView!.signUpButton!.frame.height + 16.0,  signUpView!.frame.width,  dismissButtonFrame.height)
-        
+        self.edgesForExtendedLayout = UIRectEdge()
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func selectProfileButtonTapped(sender: AnyObject) {
+        
+        let myPickerController = UIImagePickerController()
+        myPickerController.delegate = self
+        myPickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        self.presentViewController(myPickerController, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]){
+        
+        profilePhotoImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    @IBAction func cancelButtonTapped(sender: AnyObject) {
+        
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func signUpButtonTapped(sender: AnyObject) {
+        
+        self.view.endEditing(true)
+        
+        let userName = userEmailAddressTextField.text
+        let userPassword = userPasswordTextField.text
+        let userPasswordRepeat = userPasswordRepeatTextField.text
+        let userFirstName = userFirstNameTextField.text
+        let userLastName = userLastNameTextField.text
+        
+        if(userName!.isEmpty || userPassword!.isEmpty || userPasswordRepeat!.isEmpty || userFirstName!.isEmpty || userLastName!.isEmpty){
+            
+            let myAlert = UIAlertController(title: "Alert", message: "All fields are required to fill in.", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
+            
+            myAlert.addAction(okAction)
+            
+            self.presentViewController(myAlert, animated: true, completion: nil)
+            
+            return
+        }
+        
+        if (userPassword != userPasswordRepeat)
+        {
+            let myAlert = UIAlertController(title: "Alert", message: "Password do not match. Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
+            
+            myAlert.addAction(okAction)
+            
+            self.presentViewController(myAlert, animated: true, completion: nil)
+            return
+        }
+        
+        let myUser:PFUser = PFUser()
+        myUser.username = userName
+        myUser.password = userPassword
+        myUser.email = userName
+        myUser.setObject(userFirstName!, forKey: "first_name")
+        myUser.setObject(userLastName!, forKey: "last_name")
+        
+        let profileImageData = UIImageJPEGRepresentation(profilePhotoImageView.image!, 1)
+        
+        if (profileImageData != nil)
+        {
+            let profileImageFile = PFFile(data: profileImageData!)
+            
+            myUser.setObject(profileImageFile!, forKey: "profile_picture")
+        }
+        
+        
+        let spiningActivity = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        spiningActivity.labelText = "Sending"
+        spiningActivity.detailsLabelText = "Please wait"
+
+        
+        myUser.signUpInBackgroundWithBlock { (success:Bool, error:NSError?) -> Void in
+            
+            spiningActivity.hide(true)
+            
+            var userMessage = "Registration is successful."
+            
+            if(!success)
+            {
+                //userMessage = 
+                userMessage = error!.localizedDescription
+            }
+            
+            let myAlert = UIAlertController(title: "Alert", message: userMessage, preferredStyle: UIAlertControllerStyle.Alert)
+            
+            let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default){
+                action in
+                
+                if(success)
+                {
+                self.dismissViewControllerAnimated(true, completion: nil)
+                    
+                }
+            }
+            
+            myAlert.addAction(okAction)
+            
+            self.presentViewController(myAlert, animated: true, completion: nil)
+        }
+       
+    }
+   
 }

@@ -16,25 +16,7 @@ class RSSViewController: UITableViewController, MWFeedParserDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let user = PFUser()
-        user.username = "my name"
-        user.password = "my pass"
-        user.email = "email@example.com"
-        
-        // other fields can be set if you want to save more information
-        user["phone"] = "650-555-0000"
-        
-        user.signUpInBackgroundWithBlock { (returnedResult, returnedError) -> Void in
-            if returnedError == nil
-            {
-                self.dismissViewControllerAnimated(true, completion: nil)
             }
-            else
-            {
-                //self.showAlert("There was an error with your sign up", error: returnedError!)
-            }
-        }
-    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -46,15 +28,6 @@ class RSSViewController: UITableViewController, MWFeedParserDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     func request() {
         let URL = NSURL(string: "http://usjapantomodachi.org/feed/")
         let feedParser = MWFeedParser(feedURL: URL);
@@ -152,5 +125,32 @@ class RSSViewController: UITableViewController, MWFeedParserDelegate {
         self.navigationController?.pushViewController(con, animated: true)
     }
     
+    @IBAction func LogoutButtonTapped(sender: AnyObject) {
+        
+        NSUserDefaults.standardUserDefaults().stringForKey("user_name")
+        NSUserDefaults.standardUserDefaults().synchronize()
+        
+        let spiningActivity = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        spiningActivity.labelText = "Sending"
+        spiningActivity.detailsLabelText = "Please wait"
+        
+        PFUser.logOutInBackgroundWithBlock { (error:NSError?) -> Void in
+            
+            spiningActivity.hide(true)
+            
+            //Navigate to protected page
+            let mainStoryBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            
+            let signInPage:SignInViewController = mainStoryBoard.instantiateViewControllerWithIdentifier("SignInViewController") as! SignInViewController
+            
+            let signInPageNav = UINavigationController(rootViewController: signInPage)
+            
+            let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            
+            appDelegate.window?.rootViewController = signInPageNav
+
+        }
+  
+    }
 
 }

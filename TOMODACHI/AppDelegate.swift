@@ -19,13 +19,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         Parse.enableLocalDatastore()
-    Parse.setApplicationId("3EzK0IUdeokPEbHACAw6SFlvxc0NhSwJCIBPUZxl", clientKey: "Qo1OjJpSGsdTUTdIDIzLQEZaJGvakXMlM11VQzGk")
-
-        PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let loginVC = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! ViewController
-        self.window!.rootViewController = loginVC
+        Parse.setApplicationId("jsShjEqeesnlFSVJkV78YnskxsuhcnTzmlaLgQue", clientKey: "wqphbRdOmYiHjn3MksUENmyfUSBfIRlyUyKOKVCy")
+
+        //PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
+        
+        buildUserInterface()
+        
+        //let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        //let loginVC = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! ViewController
+        //self.window!.rootViewController = loginVC
+        
+        
         return true
     }
 
@@ -49,6 +54,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    func buildUserInterface()
+    {
+        let userName:String? = NSUserDefaults().stringForKey("user_name")
+        
+        if (userName != nil)
+        {
+            //Navigate to protected page
+            let mainStoryBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            
+            let tabMainPage:UITabBarController = mainStoryBoard.instantiateViewControllerWithIdentifier("TabBarMain") as! UITabBarController
+            
+            let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            
+            appDelegate.window?.rootViewController = tabMainPage
+            
+        }
+
+        
     }
 
 

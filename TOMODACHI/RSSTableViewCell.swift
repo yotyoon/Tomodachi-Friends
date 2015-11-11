@@ -2,7 +2,7 @@
 //  RSSTableViewCell.swift
 //  TOMODACHI
 //
-//  Created by Kei Fujisato on 10/23/15.
+//  Created by Yot Yoon Toh on 10/23/15.
 //  Copyright © 2015 Yot Yoon Toh. All rights reserved.
 //
 
