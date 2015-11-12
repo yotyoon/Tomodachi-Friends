@@ -94,15 +94,14 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         myUser.setObject(userFirstName!, forKey: "first_name")
         myUser.setObject(userLastName!, forKey: "last_name")
         
-        let profileImageData = UIImageJPEGRepresentation(profilePhotoImageView.image!, 1)
-        
-        if (profileImageData != nil)
+        if let profileImageData = profilePhotoImageView.image
         {
-            let profileImageFile = PFFile(data: profileImageData!)
+            let profileImageDataJPEG = UIImageJPEGRepresentation(profileImageData, 1)
             
+            let profileImageFile = PFFile(data: profileImageDataJPEG!)
             myUser.setObject(profileImageFile!, forKey: "profile_picture")
+            
         }
-        
         
         let spiningActivity = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         spiningActivity.labelText = "Sending"
@@ -113,7 +112,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
             
             spiningActivity.hide(true)
             
-            var userMessage = "Registration is successful."
+            var userMessage = "Registration is successful"
             
             if(!success)
             {

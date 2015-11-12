@@ -2,7 +2,7 @@
 //  AboutPageViewController.swift
 //  TOMODACHI
 //
-//  Created by Kei Fujisato on 11/7/15.
+//  Created by Yot Yoon Toh on 11/7/15.
 //  Copyright © 2015 Yot Yoon Toh. All rights reserved.
 //
 
@@ -10,33 +10,23 @@ import UIKit
 
 class AboutPageViewController: UIViewController, UINavigationControllerDelegate {
 
+    @IBOutlet weak var webView: UIWebView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        
+       let localFilePath = NSBundle.mainBundle().URLForResource("aboutUs", withExtension: "html")
+        let request = NSURLRequest(URL: localFilePath!)
+        webView.loadRequest(request)
+        self.view.addSubview(webView)
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    @IBAction func closeButtonTapped(sender: AnyObject) {
-        
-        //Navigate to protected page
-        let mainStoryBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        
-        let settingPage:SettingViewController = mainStoryBoard.instantiateViewControllerWithIdentifier("SettingViewController") as! SettingViewController
-        
-        let settingPageNav = UINavigationController(rootViewController: settingPage)
-        
-        let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        appDelegate.window?.rootViewController = settingPageNav
-
-    }
-    
     
     
 }

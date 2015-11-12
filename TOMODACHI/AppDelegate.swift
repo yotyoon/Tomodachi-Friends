@@ -26,10 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         buildUserInterface()
         
-        //let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        //let loginVC = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! ViewController
-        //self.window!.rootViewController = loginVC
-        
         
         return true
     }
@@ -60,16 +56,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     {
         let userName:String? = NSUserDefaults().stringForKey("user_name")
         
-        if (userName != nil)
+        if (userName == nil)
         {
+            //Navigate to protected page
+            //let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            
             //Navigate to protected page
             let mainStoryBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             
-            let tabMainPage:UITabBarController = mainStoryBoard.instantiateViewControllerWithIdentifier("TabBarMain") as! UITabBarController
+            let signInPage:SignInViewController = mainStoryBoard.instantiateViewControllerWithIdentifier("SignInViewController") as! SignInViewController
+            
+            let signInPageNav = UINavigationController(rootViewController: signInPage)
             
             let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             
-            appDelegate.window?.rootViewController = tabMainPage
+            appDelegate.window?.rootViewController = signInPageNav
+            
+
+            //let SignInViewController = mainStoryBoard.instantiateViewControllerWithIdentifier("SignInViewController") as! ViewController
+            
+            //self.window!.rootViewController = SignInViewController
+            
+
+            //let tabMainPage:UITabBarController = mainStoryBoard.instantiateViewControllerWithIdentifier("TabBarMain") as! UITabBarController
+            
+            //let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            
+            //appDelegate.window?.rootViewController = tabMainPage
             
         }
 

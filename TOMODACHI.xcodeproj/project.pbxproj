@@ -10,6 +10,7 @@
 		3202D7D31BED8353006F5C7A /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3202D7D21BED8353006F5C7A /* SettingViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		3218D0DD1BE8A6A5009786E5 /* loginScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 3218D0DC1BE8A6A5009786E5 /* loginScreen.png */; settings = {ASSET_TAGS = (); }; };
 		3218D0DF1BEAC458009786E5 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3218D0DE1BEAC458009786E5 /* SignUpViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		321CB5691BF4790100EBE755 /* aboutUs.html in Resources */ = {isa = PBXBuildFile; fileRef = 321CB5681BF4790100EBE755 /* aboutUs.html */; settings = {ASSET_TAGS = (); }; };
 		322879B01BD66FA700B46A25 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322879AF1BD66FA700B46A25 /* AppDelegate.swift */; };
 		322879B41BD66FA700B46A25 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322879B31BD66FA700B46A25 /* ContactsViewController.swift */; };
 		322879B71BD66FA700B46A25 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 322879B51BD66FA700B46A25 /* Main.storyboard */; };
@@ -62,6 +63,7 @@
 		3202D7D21BED8353006F5C7A /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		3218D0DC1BE8A6A5009786E5 /* loginScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loginScreen.png; sourceTree = "<group>"; };
 		3218D0DE1BEAC458009786E5 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		321CB5681BF4790100EBE755 /* aboutUs.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = aboutUs.html; sourceTree = "<group>"; };
 		322879AC1BD66FA700B46A25 /* TOMODACHI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TOMODACHI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		322879AF1BD66FA700B46A25 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		322879B31BD66FA700B46A25 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 		32EADB191BD7896F00B091A2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				321CB5681BF4790100EBE755 /* aboutUs.html */,
 				32F696721BF06B8900B615E7 /* MBProgressHUD.h */,
 				32F696731BF06B8900B615E7 /* MBProgressHUD.m */,
 				3218D0DC1BE8A6A5009786E5 /* loginScreen.png */,
@@ -324,6 +327,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				321CB5691BF4790100EBE755 /* aboutUs.html in Resources */,
 				326CE4BA1BD7D402007EF66F /* Chat-Bubble.png in Resources */,
 				326CE4BC1BD7D402007EF66F /* RSS-Alternative@2x.png in Resources */,
 				32E43B0E1BE811E800F74E46 /* logo_100.png in Resources */,
