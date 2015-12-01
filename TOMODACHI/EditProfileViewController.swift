@@ -115,7 +115,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         if(profileImageData != nil)
         {
             let profileFileObject = PFFile(data:profileImageData!)
-            myUser.setObject(profileFileObject!, forKey: "profile_picture")
+            myUser.setObject(profileFileObject, forKey: "profile_picture")
         }
         
         // Display activity indicator

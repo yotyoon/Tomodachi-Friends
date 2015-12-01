@@ -64,9 +64,11 @@ class PasswordResetViewController: UIViewController {
     }
 
     @IBAction func cancelButtonTapped(sender: AnyObject) {
-        
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    @IBAction func doneButtonTapped(sender: AnyObject) {
+         self.dismissViewControllerAnimated(true, completion: nil)
+    }
 
 }

@@ -99,7 +99,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
             let profileImageDataJPEG = UIImageJPEGRepresentation(profileImageData, 1)
             
             let profileImageFile = PFFile(data: profileImageDataJPEG!)
-            myUser.setObject(profileImageFile!, forKey: "profile_picture")
+            myUser.setObject(profileImageFile, forKey: "profile_picture")
             
         }
         
@@ -134,6 +134,10 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
             
             myAlert.addAction(okAction)
             
+            let installation = PFInstallation.currentInstallation()
+            installation["user"] = PFUser.currentUser()
+            installation.saveInBackgroundWithBlock(nil)
+
             self.presentViewController(myAlert, animated: true, completion: nil)
         }
        

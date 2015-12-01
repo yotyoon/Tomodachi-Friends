@@ -17,6 +17,10 @@
 #import <KINWebBrowser/KINWebBrowserViewController.h>
 #import <ParseUI/ParseUI.h>
 #import <Parse/Parse.h>
-#import <ParseUI/ParseUI.h>
 #import <Bolts/Bolts.h>
 #import "MBProgressHUD.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <ParseFacebookUtilsV4/PFFacebookUtils.h>
+#import "JSQMessages.h"
+#import "NSDate+Utilities.h"

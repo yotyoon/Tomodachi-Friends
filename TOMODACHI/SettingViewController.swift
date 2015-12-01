@@ -61,6 +61,7 @@ class SettingViewController: UIViewController{
     {
         if(PFUser.currentUser() == nil)
         {
+            print("PFUser is nil.. return")
             return
         }
         
